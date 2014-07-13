@@ -19,7 +19,7 @@ module.exports = function(grunt){
 			wp_content: {
 				expand: true,
 				cwd: 'wp/',
-				src: ['wp-content/*'],
+				src: ['wp-content/**/*'],
 				dest: './'
 			},
 
