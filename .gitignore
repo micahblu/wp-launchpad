@@ -3,3 +3,4 @@ vendor/
 wp-content/
 wp/
 index.php
+wp-config-sample.php
