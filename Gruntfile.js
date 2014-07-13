@@ -3,10 +3,23 @@ module.exports = function(grunt){
 		pkg: grunt.file.readJSON('package.json'),
 
 		copy: {
+
+			index: {
+				expand: true,
+				cwd: 'wp/',
+				src: ['index.php'],
+				dest: './',
+				options: {
+			     	process: function (content, srcpath) {
+			        	return content.replace(/wp\-/g,"wp/wp-");
+			        }	
+			    }
+			},
+
 			wp_content: {
 				expand: true,
 				cwd: 'wp/',
-				src: ['wp-content/*', 'index.php'],
+				src: ['wp-content/*'],
 				dest: './'
 			},
 
@@ -26,5 +39,5 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-copy');
 
 
-	grunt.registerTask('init', ['copy:wp_content', 'copy:wp_config']);
+	grunt.registerTask('init', ['copy:index', 'copy:wp_content', 'copy:wp_config']);
 }
