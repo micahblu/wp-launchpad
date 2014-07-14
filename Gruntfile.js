@@ -33,11 +33,22 @@ module.exports = function(grunt){
 
 	});
 
-	/*['grunt-contrib-copy'].forEach(function(task){
-		grunt.loadNpmTask(task);
-	});*/
 	grunt.loadNpmTasks('grunt-contrib-copy');
 
+	grunt.registerTask('init', ['copy:index', 'copy:wp_content', 'copy:wp_config', 'update_wp_paths']);
 
-	grunt.registerTask('init', ['copy:index', 'copy:wp_content', 'copy:wp_config']);
+	grunt.registerTask('update_wp_paths', function(){
+
+		var fs = require('fs');
+		var path = require('path');
+		var wp_config = grunt.file.read("wp-config-sample.php");
+
+		var injection = "/** Let WordPress know we've moved our wp-content directory */\n";
+			injection += "define( 'WP_CONTENT_DIR', dirname( __FILE__ ) . '/wp-content' );\n";
+			injection += "define( 'WP_CONTENT_URL', 'http://' . dirname($_SERVER['PHP_SELF']) .'/wp-content' );\n";
+
+		wp_config = wp_config.replace(/(\/\**.*\n.+wp\-settings\.php.+)/g, injection+"\n$1");
+
+		grunt.file.write('wp-config-sample.php', wp_config);
+	});
 }
