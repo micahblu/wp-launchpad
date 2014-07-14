@@ -1,7 +1,9 @@
 module.exports = function(grunt){
+
+	var host = 'http://localhost'; // no trailing slash
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-
 		copy: {
 
 			index: {
@@ -45,7 +47,8 @@ module.exports = function(grunt){
 
 		var injection = "/** Let WordPress know we've moved our wp-content directory */\n";
 			injection += "define( 'WP_CONTENT_DIR', dirname( __FILE__ ) . '/wp-content' );\n";
-			injection += "define( 'WP_CONTENT_URL', 'http://' . dirname($_SERVER['PHP_SELF']) .'/wp-content' );\n";
+			injection += "$root = substr($_SERVER['PHP_SELF'], 0 , strpos($_SERVER['PHP_SELF'], 'wp/') ? strpos($_SERVER['PHP_SELF'], 'wp/') : strrpos($_SERVER['PHP_SELF'], '/'));\n";
+			injection += "define( 'WP_CONTENT_URL', 'http://' . $_SERVER['HTTP_HOST'] . $root . '/wp-content' );\n";
 
 		wp_config = wp_config.replace(/(\/\**.*\n.+wp\-settings\.php.+)/g, injection+"\n$1");
 
