@@ -1,7 +1,5 @@
 module.exports = function(grunt){
 
-	var host = 'http://localhost'; // no trailing slash
-
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		copy: {
@@ -31,13 +29,25 @@ module.exports = function(grunt){
 				src: ['wp-config-sample.php'],
 				dest: './'
 			}
-		}
+		},
 
+		php: {
+      serve: {
+      	options: {
+      		port: 8000,
+          keepalive: true,
+          open: true
+        }
+      }
+    }
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-php');
 
-	grunt.registerTask('init', ['copy:index', 'copy:wp_content', 'copy:wp_config', 'update_wp_paths']);
+	grunt.registerTask('init', ['copy:index', 'copy:wp_content', 'copy:wp_config', 'update_wp_paths', 'php']);
+
+	grunt.registerTask('serve', 'php');
 
 	grunt.registerTask('update_wp_paths', function(){
 
