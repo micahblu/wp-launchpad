@@ -12,7 +12,7 @@ __Open up terminal and type:__
 ```bash
 composer install
 npm install
-grunt init
+grunt
 ```
 
 __After that do the following:__
