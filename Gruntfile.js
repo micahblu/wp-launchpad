@@ -2,8 +2,8 @@ module.exports = function(grunt){
 
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+	
 		copy: {
-
 			index: {
 				expand: true,
 				cwd: 'wp/',
@@ -15,14 +15,12 @@ module.exports = function(grunt){
 			        }	
 			    }
 			},
-
 			wp_content: {
 				expand: true,
 				cwd: 'wp/',
 				src: ['wp-content/**/*'],
 				dest: './'
 			},
-
 			wp_config: {
 				expand: true,
 				cwd: 'wp/',
@@ -62,5 +60,8 @@ module.exports = function(grunt){
 		wp_config = wp_config.replace(/(\/\**.*\n.+wp\-settings\.php.+)/g, injection+"\n$1");
 
 		grunt.file.write('wp-config-sample.php', wp_config);
+
+		// remove wp/wp-config-sample.php so wordpress finds the correct one in the absolute root directory.
+		grunt.file.delete('wp/wp-config-sample.php');
 	});
 }
