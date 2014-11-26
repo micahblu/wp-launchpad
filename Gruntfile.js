@@ -46,6 +46,8 @@ module.exports = function(grunt){
 
 	grunt.registerTask('default', ['copy:index', 'copy:wp_content', 'copy:wp_config', 'update_wp_paths', 'php']);
 
+	grunt.registerTask('serve', ['php']);
+
 	grunt.registerTask('update_wp_paths', function(){
 
 		var fs = require('fs');
