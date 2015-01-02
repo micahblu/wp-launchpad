@@ -1,6 +1,6 @@
 {
   "name": "wp-launchpad",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Launchpad for your professional WordPress development workflow ",
   "main": "Gruntfile.js",
   "dependencies": {
